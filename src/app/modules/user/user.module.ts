@@ -14,6 +14,7 @@ import { PostComponent } from './post/post.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ConnectComponent } from './connect/connect.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileVisitComponent } from './profile-visit/profile-visit.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProfileComponent } from './profile/profile.component';
     PostComponent,
     ConnectComponent,
     ProfileComponent,
+    ProfileVisitComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatCardModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ]
 })
 export class UserModule { }

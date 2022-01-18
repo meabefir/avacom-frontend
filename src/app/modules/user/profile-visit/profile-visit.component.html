@@ -1,0 +1,11 @@
+<div *ngIf="loading">
+    <p>{{username}}</p>
+</div>
+
+<div *ngIf="!loading">
+    <div>Bio <span>{{bio}}</span></div>
+    <div>Nickname <span>{{nickname}}</span></div>
+    <div>Age <span>{{age}}</span></div>
+</div>
+
+<button routerLink="/home">back</button>

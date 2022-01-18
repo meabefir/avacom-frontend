@@ -19,8 +19,43 @@ export class ConnectComponent implements OnInit {
 
   ngOnInit(): void {
     this.friendRequestService.fetchFriendRequests()
+    this.friendRequestService.fetchFriends()
   }
-  
+
+  async confirmFR(username: string) {
+    await this.friendRequestService.confirmFriendRequest(username)
+    .then(res => {
+      
+      this.notificationService.add(res.message)
+
+      this.friendRequestService.removeFRFrom(username)
+
+    }).catch(err => {
+      this.notificationService.add("Error " + err)
+      if (err == 401)
+      {
+        this.routerService.navigate(['/login'])
+      }
+    })    
+  }
+
+  async declineFR(username: string) {
+    await this.friendRequestService.declineFriendRequest(username)
+    .then(res => {
+      
+      this.notificationService.add(res.message)
+
+      this.friendRequestService.removeFRFrom(username)
+
+    }).catch(err => {
+      this.notificationService.add("Error " + err)
+      if (err == 401)
+      {
+        this.routerService.navigate(['/login'])
+      }
+    })    
+  }
+
   async sendRequest() {
     await this.friendRequestService.sendFriendRequest(this.friendUsername.value)
     .then(res => {

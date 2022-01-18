@@ -1,1 +1,21 @@
-profile
+<div *ngIf="!editing">
+    <div>Username: <span>{{username | uppercase}}</span></div>
+    <div>Bio: <span>{{bio}}</span></div>
+    <div>Nickname: <span>{{nickname}}</span></div>
+    <div>Age: <span>{{age}}</span></div>
+    <button (click)="edit()">Edit</button>
+</div>
+
+<div *ngIf="editing">
+    <mat-label>Bio</mat-label>
+    <input matInput [type]="'text'" [formControl]="bio_input">
+    <br>
+    <mat-label>Nickname</mat-label>
+    <input matInput [type]="'text'" [formControl]="nickname_input">
+    <br>
+    <mat-label>Age</mat-label>
+    <input matInput [type]="'number'" [formControl]="age_input">
+    <br>
+    <button (click)="update()">Update</button>
+    <button (click)="edit()">Cancel</button>
+</div>

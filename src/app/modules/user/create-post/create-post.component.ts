@@ -34,8 +34,7 @@ export class CreatePostComponent implements OnInit {
       
       this.notificationService.add("Post created")
       
-      let new_post: PostView = res;
-      this.postService.addPost(new_post)
+      this.postService.fetchFeed()
 
       this.text.reset()
       this.title.reset()

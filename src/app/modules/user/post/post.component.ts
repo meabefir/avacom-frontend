@@ -1,4 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { CommentView } from 'src/app/models/VIEWS/comment.view';
+import { PostView } from 'src/app/models/VIEWS/post.view';
+import { NotificationService } from 'src/app/services/notification.service';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-post',
@@ -8,17 +13,35 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PostComponent implements OnInit {
 
   @Input()
-  title?: string;
+  postData?: PostView 
 
-  @Input()
-  text?: string;
+  showComments = false
+  commenting = false
 
-  @Input()
-  username?: string;
+  newCommentFormControll: FormControl = new FormControl()
 
-  constructor() { }
+  constructor(private postService: PostService,
+            private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+  }
+
+  async postComment() {
+    if (!this.postData)
+      return
+    await this.postService.postComment({
+      text: this.newCommentFormControll.value,
+      postId: this.postData.id
+    }).then(res => {
+      //this.errorService.add(res.message)
+      
+      this.notificationService.add("Comment posted")
+      
+      this.postService.fetchFeed()
+
+    }).catch(err => {
+      this.notificationService.add("Error " + err)
+    })    
   }
 
 }

@@ -1,30 +1,49 @@
 import { Injectable } from '@angular/core';
 import { baseUrl } from '../app.module';
-import { CommentDTO } from '../models/DTOS/comment.dto';
-import { PostDTO } from '../models/DTOS/post.dto';
-import { PostView } from '../models/VIEWS/post.view';
+import { UserProfileDTO } from '../models/DTOS/userProfile.dto';
 import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class UserProfileService {
 
-  posts : PostView[] = []
+  constructor(private notificationService: NotificationService) { }
 
-  fetchedFeed = false
-
-  constructor(public notificationService: NotificationService) { }
-
-  addPost(new_post: PostView) {
-    this.posts.unshift(new_post)
-  }
-
-  async fetchFeed() {
+  async updateProfile(body_data: UserProfileDTO) {
+    
     let token = localStorage.getItem("token");
     if (token == null)
       token = "";
-    return await fetch(`${baseUrl}/post/feed`,{
+    return await fetch(`${baseUrl}/userProfile/myProfile`,{
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body_data)
+    })
+    .then(res => {
+      // console.log(res.status)
+      if (res.ok == false)
+      {
+        throw res.status;
+      }
+      return res.json()
+    })
+    .then(data => {
+      return data
+    })
+    .catch(err => {
+      this.notificationService.add("Error " + err)
+    })
+  }
+
+  async fetchMyProfile() {
+    let token = localStorage.getItem("token");
+    if (token == null)
+      token = "";
+    return await fetch(`${baseUrl}/userProfile/myProfile`,{
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -40,28 +59,23 @@ export class PostService {
       return res.json()
     })
     .then(data => {
-      console.log("posts fetched ", data)
-      this.posts = data
-      this.posts.reverse()
-      this.fetchedFeed = true
+      return data
     })
     .catch(err => {
-      throw(err)
+      this.notificationService.add("Error " + err)
     })
   }
 
-  async postComment(comment_dto: CommentDTO) {
+  async getUserProfile(username: string) {
     let token = localStorage.getItem("token");
     if (token == null)
       token = "";
-
-    return await fetch(`${baseUrl}/post/comment`,{
-      method: 'POST',
+    return await fetch(`${baseUrl}/userProfile/profile/${username}`,{
+      method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(comment_dto)
+      }
     })
     .then(res => {
       // console.log(res.status)
@@ -72,38 +86,11 @@ export class PostService {
       return res.json()
     })
     .then(data => {
-      return data;
+      return data
     })
     .catch(err => {
-      throw(err)
+      this.notificationService.add("Error " + err)
     })
   }
 
-  async post(post_dto: PostDTO) {
-    let token = localStorage.getItem("token");
-    if (token == null)
-      token = "";
-    return await fetch(`${baseUrl}/post/create`,{
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(post_dto)
-    })
-    .then(res => {
-      // console.log(res.status)
-      if (res.ok == false)
-      {
-        throw res.status;
-      }
-      return res.json()
-    })
-    .then(data => {
-      return data;
-    })
-    .catch(err => {
-      throw(err)
-    })
-  }
 }

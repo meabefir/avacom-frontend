@@ -2,15 +2,35 @@
 <input matInput [type]="'text'" [formControl]="friendUsername">
 <button mat-raised-button (click)="sendRequest()">Add Friend</button>  
 
-<h2>Friend Requests</h2>
-
-<div *ngIf="(friendRequestService.friendRequests.length); else postsLoader" class="posts-container">
+<!-- friend requests -->
+<div *ngIf="(friendRequestService.friendRequests.length); else frLoader" class="posts-container">
+    <h2>Friend Requests</h2>
     <div *ngFor="let fr of friendRequestService.friendRequests">
-        <div>{{fr.username}} {{fr.sentAt}}</div>
+        <div>{{fr.username}} {{fr.sentAt | date}}
+            <button (click)="confirmFR(fr.username)">confirm</button>
+            <button (click)="declineFR(fr.username)">decline</button>
+        </div>
+        
     </div>
 </div>
-<ng-template #postsLoader>
-    <div *ngIf="friendRequestService.fetched== false">
+<ng-template #frLoader>
+    <div *ngIf="friendRequestService.fetchedFR== false">
+        <mat-progress-bar mode="query" style="width: 500px;"></mat-progress-bar>
+    </div>
+</ng-template>
+
+<!-- friends -->
+<div *ngIf="(friendRequestService.friends.length); else fLoader" class="posts-container">
+    <h2>Friends</h2>
+    <div *ngFor="let f of friendRequestService.friends">
+        <div>{{f.username}} {{f.friendsSince | date}}
+            <button [routerLink]="['profile', f.username]">view profile</button>
+        </div>
+        
+    </div>
+</div>
+<ng-template #fLoader>
+    <div *ngIf="friendRequestService.fetchedFriends == false">
         <mat-progress-bar mode="query" style="width: 500px;"></mat-progress-bar>
     </div>
 </ng-template>

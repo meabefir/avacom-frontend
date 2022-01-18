@@ -1,10 +1,41 @@
-<mat-card>
+<mat-card *ngIf="postData != undefined">
     <mat-card-header>
-    <mat-card-subtitle>{{username}}</mat-card-subtitle>
-    <mat-card-title> {{title}} </mat-card-title>
+    <mat-card-subtitle>{{postData.username}}</mat-card-subtitle>
+    <mat-card-title> {{postData.title}} </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <p> {{text}} </p>
+        <p> {{postData.text}} </p>
     </mat-card-content>
+        <div>{{postData.createdAt | date}}</div>
+    <br>
+
+    <!-- add comment button -->
+    <div *ngIf="!commenting">
+        <button (click)="commenting = true">comment</button>
+    </div>
+    <!-- else  -->
+    <div *ngIf="commenting">
+
+        <input matInput [type]="'text'" [formControl]="newCommentFormControll">
+        <button mat-raised-button (click)="postComment()">add comment</button>  
+
+        <button (click)="commenting = false; ">cancel</button>
+    </div>
+
+    <!-- show comments button -->
+    <div *ngIf="postData.comments.length && !showComments">
+        <button (click)="showComments = true">show comments</button>
+    </div>
+
+    <!-- comments -->
+    <div *ngIf="postData.comments.length && showComments">
+        <div *ngFor="let comment of postData.comments">
+            <mat-card>
+                <mat-card-subtitle>{{comment.username}}</mat-card-subtitle>
+                <mat-card-content>{{comment.text}}</mat-card-content>
+            </mat-card>
+        </div>
+        <button (click)="showComments = false">hide comments</button>
+    </div>
 </mat-card>
 
