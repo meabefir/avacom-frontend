@@ -3,7 +3,7 @@
     <div>Bio: <span>{{bio}}</span></div>
     <div>Nickname: <span>{{nickname}}</span></div>
     <div>Age: <span>{{age}}</span></div>
-    <button (click)="edit()">Edit</button>
+    <button (click)="edit()">Edit Bio</button>
 </div>
 
 <div *ngIf="editing">
@@ -18,4 +18,8 @@
     <br>
     <button (click)="update()">Update</button>
     <button (click)="edit()">Cancel</button>
+</div>
+
+<div *ngIf="avatar != undefined">
+    <app-avatar [editable] = true [size] = 50 [avatar] = "avatar"></app-avatar>
 </div>

@@ -1,4 +1,5 @@
 <mat-card *ngIf="postData != undefined">
+    <app-avatar [editable] = false [size] = 10 [avatar] = "postData.avatar"></app-avatar>
     <mat-card-header>
     <mat-card-subtitle>{{postData.username}}</mat-card-subtitle>
     <mat-card-title> {{postData.title}} </mat-card-title>
@@ -36,6 +37,20 @@
             </mat-card>
         </div>
         <button (click)="showComments = false">hide comments</button>
+    </div>
+
+    <br>
+    <!-- reactions -->
+    <div *ngFor="let reaction of postData.reactions">
+        <span>{{reaction.type}}s:</span>
+        <span>{{reaction.count}}</span>
+    </div>
+    <br>
+    <button [disabled]="postData.likedByMe" (click)="like()">Like</button>
+    <button [disabled]="postData.dislikedByMe" (click)="dislike()">Dislike</button>
+    <br>
+    <div *ngIf="postData.isMyPost">
+        <button (click)="delete()">Delete</button>
     </div>
 </mat-card>
 

@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 import { UserProfileDTO } from 'src/app/models/DTOS/userProfile.dto';
+import { AvatarView } from 'src/app/models/VIEWS/avatar.view';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +15,7 @@ export class ProfileComponent implements OnInit {
   username: string = ''
   bio: string = ''
   nickname: string = ''
+  avatar?: AvatarView
   age = 0
 
   bio_input = new FormControl()
@@ -59,7 +61,8 @@ export class ProfileComponent implements OnInit {
       this.bio = res.bio
       this.nickname = res.nickname
       this.age = res.age
-      
+      this.avatar = res.avatar
+
       this.bio_input.setValue(res.bio)
       this.nickname_input.setValue(res.nickname)
       this.age_input.setValue(res.age)

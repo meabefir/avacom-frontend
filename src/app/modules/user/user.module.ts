@@ -15,6 +15,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ConnectComponent } from './connect/connect.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileVisitComponent } from './profile-visit/profile-visit.component';
+import { AvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ProfileVisitComponent } from './profile-visit/profile-visit.component';
     ConnectComponent,
     ProfileComponent,
     ProfileVisitComponent,
+    AvatarComponent,
   ],
   imports: [
     CommonModule,

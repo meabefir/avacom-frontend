@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AvatarView } from 'src/app/models/VIEWS/avatar.view';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserProfileService } from 'src/app/services/user-profile.service';
 
@@ -12,6 +13,7 @@ export class ProfileVisitComponent implements OnInit {
 
   username: string | null = "";
   loading = true
+  avatar?: AvatarView
 
   bio = ""
   nickname = ""
@@ -27,6 +29,7 @@ export class ProfileVisitComponent implements OnInit {
     this.userProfileService.getUserProfile(this.username != null ? this.username : "").then(res => {
       
       console.log("fetched user profile ", res)
+      this.avatar = res.avatar
       this.loading = false
       this.bio = res.bio
       this.nickname = res.nickname

@@ -140,6 +140,7 @@ export class FriendRequestService {
       return res.json()
     })
     .then(data => {
+      // this.fetchFriends()
       return data;
     })
     .catch(err => {

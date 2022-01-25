@@ -1,0 +1,29 @@
+<div *ngIf="avatar != undefined" class="avatarContainer" [ngStyle]="containerStyles()">
+    <img src="{{images.body[avatar.bodyId]}}" alt="" [ngStyle]="imageStyles()">
+    <img src="{{images.hair[avatar.hairId]}}" alt="" [ngStyle]="imageStyles()">
+    <img src="{{images.brows[avatar.browsId]}}" alt="" [ngStyle]="imageStyles()">
+    <img src="{{images.eyes[avatar.eyesId]}}" alt="" [ngStyle]="imageStyles()">
+    <img src="{{images.noses[avatar.noseId]}}" alt="" [ngStyle]="imageStyles()">
+    <img src="{{images.lips[avatar.lipsId]}}" alt="" [ngStyle]="imageStyles()">
+    <img src="{{images.clothes[avatar.clothingId]}}" [ngStyle]="imageStyles()">
+
+    <div *ngIf="editable" >
+        <div *ngIf="!editing">
+            <button (click)="editAvatar()">Edit Avatar</button>
+        </div>
+
+        <div *ngIf="editing">
+            <button (click)="edit('eyes')">Eyes</button>
+            <button (click)="edit('nose')">Nose</button>
+            <button (click)="edit('lips')">Lips</button>
+            <button (click)="edit('hair')">Hair</button>
+            <button (click)="edit('brows')">Brows</button>
+            <button (click)="edit('body')">Body</button>
+            <button (click)="edit('clothes')">Clothes</button>
+            <br>
+            <button (click)="editAvatar()">Cancel</button>
+            <button (click)="updateAvatar()">Save</button>
+        </div>
+    </div>
+</div>
+

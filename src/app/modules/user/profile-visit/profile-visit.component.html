@@ -3,9 +3,13 @@
 </div>
 
 <div *ngIf="!loading">
-    <div>Bio <span>{{bio}}</span></div>
-    <div>Nickname <span>{{nickname}}</span></div>
-    <div>Age <span>{{age}}</span></div>
+    <div>Bio: <span>{{bio}}</span></div>
+    <div>Nickname: <span>{{nickname}}</span></div>
+    <div>Age: <span>{{age}}</span></div>
 </div>
 
+<div *ngIf="avatar != undefined">
+    <app-avatar [editable] = false [size] = 35 [avatar] = "avatar"></app-avatar>
+</div>
+<br>
 <button routerLink="/home">back</button>
